@@ -3,7 +3,7 @@ import { Draggable } from "react-beautiful-dnd";
 import { useTasks } from "../../Componant/contexts/TaskContext";
 
 const Task = ({ task, index, onEdit }) => {
-  const { deleteTask } = useTasks();
+  const { deleteTask, moveTask } = useTasks();
 
   const handleDelete = async (e) => {
     e.stopPropagation();
@@ -16,6 +16,17 @@ const Task = ({ task, index, onEdit }) => {
         console.error("Error deleting task:", error);
         alert("Failed to delete task. Please try again.");
       }
+    }
+  };
+
+  const handleMove = async (e, newStatus) => {
+    e.stopPropagation();
+    try {
+      await moveTask(task.id, newStatus);
+      console.log(`Task moved to ${newStatus}`);
+    } catch (error) {
+      console.error("Error moving task:", error);
+      alert("Failed to move task. Please try again.");
     }
   };
 
@@ -59,6 +70,21 @@ const Task = ({ task, index, onEdit }) => {
             {task.assignedTo && (
               <p className="assigned-user">👤 {task.assignedTo}</p>
             )}
+
+            {/* Ye buttons move karne ke liye */}
+            <div className="move-buttons">
+              {task.status !== "inprogress" && (
+                <button onClick={(e) => handleMove(e, "inprogress")} className="btn-move-small">
+                  Move to In Progress
+                </button>
+              )}
+              {task.status !== "done" && (
+                <button onClick={(e) => handleMove(e, "done")} className="btn-move-small">
+                  Move to Done
+                </button>
+              )}
+            </div>
+
           </div>
         </div>
       )}

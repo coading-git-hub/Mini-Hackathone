@@ -124,7 +124,7 @@ const TaskForm = ({ editTask, setEditTask, onClose }) => {
         </div>
         
         <div className="form-group">
-          <label htmlFor="assignedTo">👤 Assign To</label>
+          <label htmlFor="assignedTo">👨 Assign To</label>
           <select
             id="assignedTo"
             value={assignedTo}

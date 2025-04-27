@@ -27,12 +27,12 @@ const TaskCard = ({ task, onEdit }) => {
     fetchAssignedUser();
   }, [task.assignedTo]);
 
-  // In TaskCard.js or Task.js
+  
 const handleDelete = (e) => {
-  if (e) e.stopPropagation(); // Prevent event bubbling
+  if (e) e.stopPropagation(); 
   
   if (window.confirm("Are you sure you want to delete this task?")) {
-    console.log("Deleting task:", task.id); // Add for debugging
+    console.log("Deleting task:", task.id); 
     deleteTask(task.id);
     console.log("Delete button clicked for task:", task.id);
   }
@@ -41,9 +41,10 @@ const handleDelete = (e) => {
 };
 
   const handleMoveTask = (newStatus) => {
+    console.log("Move button clicked, moving task", task.id, "to", newStatus);
     moveTask(task.id, newStatus);
   };
-  console.log("Move button clicked, moving task", task.id, "to", newStatus);
+  
 
   return (
     <div className="task-card">

@@ -49,8 +49,6 @@ export const TaskProvider = ({ children }) => {
   // Add a new task
   const addTask = async (taskData) => {
     try {
-      console.log("Creating new task with data:", taskData);
-      
       const newTask = {
         ...taskData,
         createdBy: currentUser.uid,
@@ -58,10 +56,8 @@ export const TaskProvider = ({ children }) => {
         status: "todo"
       };
       
-      console.log("Adding task to Firestore:", newTask);
       const docRef = await addDoc(collection(db, "tasks"), newTask);
-      console.log("Task created with ID:", docRef.id);
-      
+      setTasks(prevTasks => [{id: docRef.id, ...newTask}, ...prevTasks]);
       return docRef.id;
     } catch (error) {
       console.error("Error adding task: ", error);
@@ -95,21 +91,23 @@ export const TaskProvider = ({ children }) => {
   };
 
   // Move a task to a new status
-const moveTask = async (taskId, newStatus) => {
+  const moveTask = async (taskId, newStatus) => {
     try {
-      const taskRef = doc(db, "tasks", taskId);
-      await updateDoc(taskRef, {
+      await updateDoc(doc(db, "tasks", taskId), {
         status: newStatus,
         updatedAt: new Date()
       });
       
-      console.log(`Task ${taskId} status changed to ${newStatus}`);
+      setTasks(prevTasks => 
+        prevTasks.map(task => 
+          task.id === taskId ? { ...task, status: newStatus, updatedAt: new Date() } : task
+        )
+      );
     } catch (error) {
       console.error("Error moving task: ", error);
       throw error;
     }
-  };  
-
+  };
   const value = {
     tasks,
     loading,

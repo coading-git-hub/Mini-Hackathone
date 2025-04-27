@@ -661,6 +661,19 @@ button, .btn-primary, .btn-secondary, .btn-danger {
 .form-actions .btn-secondary:hover {
   background-color: #e0e0e0;
 }
+.btn-move-small {
+  margin: 4px;
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-move-small:hover {
+  background-color: #45a049;
+}
 
 /* Loading State */
 .loading {
@@ -841,6 +854,7 @@ button, .btn-primary, .btn-secondary, .btn-danger {
   color: var(--gray-color);
   font-size: 0.9rem;
 }
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
